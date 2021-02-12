@@ -1,84 +1,65 @@
 <script>
 import { onMount } from "svelte";
 import { each } from "svelte/internal";
+	import Pokemon from './Pokemon.svelte';
+
+	const all = [ ...Array(24).keys() ].map( i => i+1);
+
 
 	let currentPkmn;
-	let pkmnName;
-	let img = '';
+
+	$: currentPkmn = 'pikachu';
+	
 	let isValid = false;
 
-	let all = '?limit=10220';
+	// let all = '?limit=10220';
 	
-	const pokeApi = 'https://pokeapi.co/api/v2/pokemon';
-	// const pokeApi = 'https://pokeapi.co/api/v2/pokemon/45/';
-
-	const searchPkmn = async (pkmn) => {
-		try {
-			await fetch(`${pokeApi}/${pkmn}/`)
-			.then(r => r.json())
-			.then(data => {
-				currentPkmn = data;
-				console.log(currentPkmn);
-				isValid = true;
-			});
-		} catch(err) {
-			currentPkmn = err;
-			isValid = false;
-		}
+	const algo = () => {
+		isValid = !isValid;
 	}
-	
-	// console.log(currentPkmn);
+
+
+
 </script>
 
 
-<h1>Pokemon elegido</h1>
-<form on:submit|preventDefault="{searchPkmn(pkmnName.toLowerCase())}">
-<input bind:value="{pkmnName}"  type="text">
-<button>buscar</button>
 
-<!-- {#each currentPkmn as pkmn}
-	{console.log(pkmn)}
-{/each} -->
-{#if isValid}
-	<div class="box-img">
-		{#if currentPkmn.sprites.front_default != null}
-			<img src="{currentPkmn.sprites.front_default}" alt="{currentPkmn.name}">
-			<img src="{currentPkmn.sprites.back_default}" alt="{currentPkmn.name}">
-			<img src="{currentPkmn.sprites.front_shiny}" alt="{currentPkmn.name}">
-			<img src="{currentPkmn.sprites.back_shiny}" alt="{currentPkmn.name}">
+<div class="container2">
+	<form on:submit|preventDefault={algo}>
+		<h1>Pokemon elegido</h1>
+		{#if  isValid}
+			<Pokemon id={currentPkmn} />
 		{:else}
-			<img src="{currentPkmn.sprites.other['official-artwork'].front_default}" alt="{currentPkmn.name}">
+			<Pokemon id={currentPkmn} />
 		{/if}
-		
-	</div>
-	<p>{currentPkmn.name}</p>
-{:else}
-	<p>Pokemon no encontrado</p>
-{/if}
-</form>
+		<div>
+			<input bind:value="{currentPkmn}" type="text" placeholder="escribe el numbero de pokedex">
+			<button>Buscar</button>
+		</div>
+	</form>
+</div>
+
+<div class="container">
+	{#each all as pkmn}
+		<Pokemon id={pkmn}/>
+	{/each}
+</div>
 
 <style>
-h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
+	.container {
+		display: inline-flex;
+		flex-wrap: wrap;
+		justify-content:center;
+  		gap: 20px;
 	}
 
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
-
-	.box-img {
-		display: flex;
+	.container2 {
+		display: inline-flex;
+		flex-wrap: wrap;
+		justify-content:center;
+  		gap: 20px;
 		width: 100%;
-		height: 200px;
-	}
-	img {
-		box-sizing: border-box;
-		width: 200px;
+		margin-bottom: 20px;
 	}
 
 
