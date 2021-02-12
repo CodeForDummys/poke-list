@@ -41,7 +41,7 @@ import { each } from "svelte/internal";
 
 <div class="container">
 	{#each all as pkmn}
-		<Pokemon id={pkmn}/>
+		<Pokemon id={Math.floor(Math.random() * 898)}/>
 	{/each}
 </div>
 

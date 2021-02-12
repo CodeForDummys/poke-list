@@ -1014,7 +1014,7 @@ var app = (function () {
     	let current;
 
     	pokemon = new Pokemon({
-    			props: { id: /*pkmn*/ ctx[5] },
+    			props: { id: Math.floor(Math.random() * 898) },
     			$$inline: true
     		});
 
@@ -1188,7 +1188,7 @@ var app = (function () {
     				set_input_value(input, /*currentPkmn*/ ctx[0]);
     			}
 
-    			if (dirty & /*all*/ 4) {
+    			if (dirty & /*Math*/ 0) {
     				each_value = /*all*/ ctx[2];
     				validate_each_argument(each_value);
     				let i;
