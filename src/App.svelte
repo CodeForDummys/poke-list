@@ -1,7 +1,11 @@
 <script>
 import { onMount } from "svelte";
 import { each } from "svelte/internal";
-	import Pokemon from './Pokemon.svelte';
+import Pokemon from './Pokemon.svelte';
+import axios from 'axios';
+const data = '/json/001-100.json';
+const url = 'http://localhost:58645/';
+let pkmn;
 
 	const all = [ ...Array(24).keys() ].map( i => i+1);
 
@@ -18,6 +22,10 @@ import { each } from "svelte/internal";
 		isValid = !isValid;
 	}
 
+	const s = async () => {
+		pkmn = (await axios.get(url+data)).data;
+		console.log(pkmn);
+	}
 
 
 </script>
@@ -35,6 +43,9 @@ import { each } from "svelte/internal";
 		<div>
 			<input bind:value="{currentPkmn}" type="text" placeholder="escribe el numbero de pokedex">
 			<button>Buscar</button>
+		</div>
+		<div>
+			<button on:click="{s}">Buscar</button>
 		</div>
 	</form>
 </div>

@@ -2,7 +2,8 @@
     const pokeApi     = 'https://pokeapi.co/api/v2/pokemon/';
     const pokeApiDesc = 'https://pokeapi.co/api/v2/pokemon-species/';
     const missingName = 'MissingNo';
-    const missingImg  = 'images/missingno.png'; 
+    const missingImg  = 'images/missingno.png';
+    const pkpi        = './001-100.json';
 
     const types = {
         normal: '#aa9',
@@ -59,6 +60,13 @@
 
         return l[random];
     }
+
+    const sss = async (pkmn) => {
+        const a = await fetch(pkpi).then(res => res.json());
+        console.log('es algo bonito',a);
+    }
+
+    // sss(24);
     
     const searchPkmn = async (pkmn) => {
         try {
@@ -86,7 +94,7 @@
                 category : specie.genera[5].genus.slice(8),
                 description : getDescr(specie.flavor_text_entries)
             }
-            console.log(data);
+            // console.log(data);
             isValid = true;
         } catch(err) {
             currentPkmn = err;
